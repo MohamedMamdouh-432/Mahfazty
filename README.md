@@ -4,16 +4,28 @@
 
 # **Features**
 
-- **(Add / Edit / Cancel) Expenses**
-- **(Add / Edit / Cancel) Income**
-- **Start a Big Operation (Market- Trip)**
+- **Authentication** 
+  - **Authentication Methods(UserName,Password) / Fingerprints**
+  - **Authentication Type (Individual-Group)**
 - **Dashboard (Expenses / Funds)**
-- **Authentication (UserName,Password) / Fingerprints**
-- **Authentication Type (Individual-Group)**
-- **Settings (Light-Dark) Theme, (Arabic-English) Localization**
+  - **(Add / Edit / Cancel) Expenses**
+  - **(Add / Edit / Cancel) Income**
+  - **Start a Big Operation (Market- Trip)**
+- **Settings**
+  - **(Light-Dark) Theme**
+  - **(Arabic-English) Localization**
 - **Voice Analysis**
-- **Monthly Reports and Visual Charts**
-- **Categories Based Reports**
-- **Expenses Vs Income Analysis Reports**
-- **Top Spending Expenses Categories**
+- **Reports**
+  - **Monthly Reports and Visual Charts**
+  - **Categories Based Reports**
+  - **Expenses Vs Income Analysis Reports**
+  - **Top Spending Expenses Categories**
 - **AI Chat**
+
+# **Modules**
+
+### 1. Authentication
+### 2. Home / Dashboard
+### 3. Settings
+### 4. Reports
+### 5. AI Chat

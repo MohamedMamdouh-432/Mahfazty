@@ -25,11 +25,11 @@ class DioFactory {
   }
 
   static void addDioHeaders() async {
-    final String token =
-        (await CacheHelper.getSecuredString(Constants.userToken) as String);
+    // final String token =
+    //     (await CacheHelper.getSecuredString(Constants.userToken) as String);
     dio?.options.headers = {
       'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
+      // 'Authorization': 'Bearer $token',
     };
   }
 
