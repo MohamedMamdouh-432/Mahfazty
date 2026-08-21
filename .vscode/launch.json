@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Mahfazty Dev",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_dev.dart",
+      // "args": ["--flavor", "development"]
+    },
+    {
+      "name": "Mahfazty Pro",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main_pro.dart",
+      // "args": ["--flavor", "production"]
+    }
+  ]
+}
