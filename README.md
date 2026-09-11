@@ -30,3 +30,7 @@
 ### 3. Settings
 ### 4. Reports
 ### 5. AI Chat
+
+# **Database**
+
+### [sqfite Docs](https://pub.dev/packages/sqflite)
