@@ -1,3 +1,4 @@
+import 'package:mahfazty/core/helpers/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -8,75 +9,82 @@ class DBProvider {
     db = await openDatabase(
       'mahfazty_db.db',
       version: 1,
-      onCreate: (Database createdDB, int version) async {
-        // create users table
-        await createdDB.execute('''
-          CREATE TABLE IF NOT EXISTS users (
-            id INT AUTO_INCREMENT PRIMARY KEY, 
-            name VARCHAR(50) NOT NULL,
-            email VARCHAR(60),
-            phone VARCHAR(20),
-            language VARCHAR(10) NOT NULL DEFAULT('en')
-            createdAt DATETIME DEFAULT NOW(), 
-            updatedAt DATETIME,
-          );
-        ''');
-        // // create accounts table
-        // await createdDB.execute('''
-        //   CREATE TABLE IF NOT EXISTS accounts (
-        //     id INT PRIMARY KEY AUTO_INCREMENT, 
-        //     userId INT NOT NULL, 
-        //     name VARCHAR(50) NOT NULL,
-        //     type ENUM('cash', 'bank', 'savings', 'eWallet', 'creditCard', 'other') NOT NULL DEFAULT('cash'),
-        //     balance DECIMAL(10, 2) NOT NULL DEFAULT(0.0),
-        //     currency TEXT NOT NULL DEFAULT('EGP'),
-        //     description TEXT,
-        //     isActive TEXT NOT NULL,
-        //     createdAt DATETIME DEFAULT NOW(), 
-        //     updatedAt DATETIME,
+      onOpen: (openedDB) async {
+        try {
+          // create users table
+          await openedDB.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+              id INTEGER PRIMARY KEY AUTOINCREMENT, 
+              name TEXT NOT NULL,
+              email TEXT,
+              phone TEXT,
+              language TEXT NOT NULL DEFAULT 'en',
+              createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+              updatedAt TEXT
+            );
+          ''');
+          // Create Accounts Table
+            await openedDB.execute('''
+              CREATE TABLE IF NOT EXISTS accounts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                userId INTEGER NOT NULL,
+                name TEXT NOT NULL,
+                type TEXT NOT NULL DEFAULT 'cash' CHECK(type IN ('cash', 'bank', 'savings', 'eWallet', 'creditCard', 'other')),
+                balance REAL NOT NULL DEFAULT 0.0,
+                currency TEXT NOT NULL DEFAULT 'EGP',
+                description TEXT,
+                isActive INTEGER NOT NULL DEFAULT 1 CHECK(isActive IN (0, 1)),
+                createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+                updatedAt TEXT,
+                FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE
+              );
+            ''');
+
+          // Create Categories Table
+            await openedDB.execute('''
+              CREATE TABLE IF NOT EXISTS categories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                type TEXT NOT NULL CHECK(type IN ('income', 'expense')),
+                parentId INTEGER,
+                icon TEXT,
+                color TEXT,
+                description TEXT,
+                createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+                updatedAt TEXT,
+                FOREIGN KEY(parentId) REFERENCES categories(id) ON DELETE SET NULL
+              );
+            ''');
+
+            // Create Transactions Table
+            await openedDB.execute('''
+              CREATE TABLE IF NOT EXISTS transactions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                userId INTEGER NOT NULL,
+                accountId INTEGER NOT NULL,
+                categoryId INTEGER,
+                type TEXT NOT NULL CHECK(type IN ('income', 'expense', 'transfer')),
+                amount REAL NOT NULL DEFAULT 0.0,
+                date TEXT DEFAULT CURRENT_TIMESTAMP,
+                title TEXT,
+                description TEXT,
+                note TEXT,
+                transferAccountId INTEGER,
+                attachmentPath TEXT,
+                createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+                updatedAt TEXT,
+                FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+                FOREIGN KEY(categoryId) REFERENCES categories(id) ON DELETE SET NULL,
+                FOREIGN KEY(transferAccountId) REFERENCES accounts(id) ON DELETE SET NULL
+              );
+            ''');
             
-        //     FOREIGN KEY(userId) REFERENCES users(id)
-        //   );
-        // ''');
-        // // create categories table
-        // await createdDB.execute('''
-        //   CREATE TABLE IF NOT EXISTS categories (
-        //     id INT PRIMARY KEY AUTO_INCREMENT, 
-        //     name VARCHAR(50) NOT NULL,
-        //     type ENUM('income', 'expense') NOT NULL,
-        //     parentId INT,
-        //     icon TEXT,
-        //     color TEXT,
-        //     description TEXT,
-        //     createdAt DATETIME DEFAULT NOW(), 
-        //     updatedAt DATETIME,
-            
-        //     FOREIGN KEY(parentId) REFERENCES categories(id)
-        //   );
-        // ''');
-        // // create transactions table
-        // await createdDB.execute('''
-        //   CREATE TABLE IF NOT EXISTS transactions (
-        //     id INT PRIMARY KEY AUTO_INCREMENT, 
-        //     userId INT NOT NULL, 
-        //     accountId INT NOT NULL, 
-        //     categoryId INT,
-        //     type ENUM('income', 'expense', 'transfer') NOT NULL,
-        //     amount DECIMAL(10, 2) NOT NULL DEFAULT(0.0),
-        //     date DATETIME DEFAULT NOW(),
-        //     title VARCHAR(30),
-        //     description TEXT,
-        //     note TEXT,
-        //     transferAccountId INT,
-        //     attachmentPath TEXT,
-        //     createdAt DATETIME DEFAULT NOW(), 
-        //     updatedAt DATETIME,
-            
-        //     FOREIGN KEY(userId) REFERENCES users(id),
-        //     FOREIGN KEY(accountId) REFERENCES accounts(id),
-        //     FOREIGN KEY(categoryId) REFERENCES categories(id)
-        //   );
-        // ''');
+          final users = await openedDB.rawQuery('SELECT * FROM users');
+          Logger.info(users.toString());
+        } catch (e) {
+          Logger.debug(e.toString());
+        }
       },
     );
   }
