@@ -1,11 +1,30 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'auth_cubit.dart';
 
-part 'auth_state.freezed.dart';
+class AuthState extends Equatable {
+  final User user;
+  final AuthStatus status;
+  final String? errorMsg;
 
-@freezed
-class AuthState with _$AuthState {
-  const factory AuthState.initial() = AuthInitial;
-  const factory AuthState.loading() = AuthLoading;
-  const factory AuthState.success() = AuthSuccess;
-  const factory AuthState.error(String message) = AuthError;
+  const AuthState({
+    required this.user,
+    required this.status,
+    required this.errorMsg,
+  });
+
+  static final initial = AuthState(
+    user: User.empty,
+    status: AuthStatus.initial,
+    errorMsg: null,
+  );
+
+  AuthState copyWith({User? user, AuthStatus? status, String? errorMsg}) {
+    return AuthState(
+      user: user ?? this.user,
+      status: status ?? this.status,
+      errorMsg: errorMsg ?? this.errorMsg,
+    );
+  }
+
+  @override
+  List<Object?> get props => [user, status, errorMsg ?? ''];
 }

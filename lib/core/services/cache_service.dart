@@ -1,20 +1,20 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CacheHelper {
-  CacheHelper._();
+class CacheService {
+  CacheService._();
 
-  static removeData(String key) async {
+  static void removeData(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(key);
   }
 
-  static clearAllData() async {
+  static void clearAllData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
   }
 
-  static setData(String key, value) async {
+  static Future<void> setData(String key, value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     switch (value.runtimeType) {
       case const (String):
@@ -34,37 +34,37 @@ class CacheHelper {
     }
   }
 
-  static getBool(String key) async {
+  static Future<bool> getBool(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getBool(key) ?? false;
   }
 
-  static getDouble(String key) async {
+  static Future<double> getDouble(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getDouble(key) ?? 0.0;
   }
 
-  static getInt(String key) async {
+  static Future<int> getInt(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getInt(key) ?? 0;
   }
 
-  static getString(String key) async {
+  static Future<String?> getString(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(key) ?? '';
+    return sharedPreferences.getString(key);
   }
 
-  static setSecuredString(String key, String value) async {
+  static void setSecuredString(String key, String value) async {
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.write(key: key, value: value);
   }
 
-  static getSecuredString(String key) async {
+  static Future<String> getSecuredString(String key) async {
     const flutterSecureStorage = FlutterSecureStorage();
     return await flutterSecureStorage.read(key: key) ?? '';
   }
 
-  static clearAllSecuredData() async {
+  static void clearAllSecuredData() async {
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.deleteAll();
   }

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mahfazty/core/di/dependency_injection.dart';
+import 'package:mahfazty/core/services/di_service.dart';
 import 'package:mahfazty/core/routing/routes.dart';
 import 'package:mahfazty/features/add/ui/screens/add_expense_screen.dart';
 import 'package:mahfazty/features/add/ui/screens/add_income_screen.dart';

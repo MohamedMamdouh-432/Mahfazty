@@ -1,33 +1,51 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mahfazty/features/auth/data/models/auth_request_body.dart';
+import 'package:mahfazty/core/data/enums/auth_status.dart';
+import 'package:mahfazty/core/data/models/user.dart';
+import 'package:mahfazty/core/data/models/user_credentials.dart';
 import 'package:mahfazty/features/auth/data/repos/auth_repo.dart';
-import 'package:mahfazty/features/auth/logic/cubit/auth_state.dart';
+
+part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepo authRepo;
 
-  AuthCubit(this.authRepo) : super(AuthState.initial());
+  AuthCubit(this.authRepo) : super(AuthState.initial);
 
-  void register(AuthRequestBody authData) async {
-    emit(AuthState.loading());
+  void register(Map<String, String> authData) async {
+    emit(state.copyWith(status: AuthStatus.inProgress));
     try {
-      await authRepo.register(authData);
-      emit(AuthState.success());
+      final user = state.user.copyWith(
+        name: authData['name'],
+        credentials: UserCredentials(
+          identifier: authData['identifier'] ?? '',
+          password: authData['password'] ?? '',
+        ),
+      );
+      final newUser = await authRepo.register(user);
+      emit(state.copyWith(status: AuthStatus.success, user: newUser));
     } catch (e) {
-      emit(AuthState.error(e.toString()));
+      emit(state.copyWith(status: AuthStatus.failure));
     }
   }
 
-  void login(AuthRequestBody authData) async {
-    emit(AuthState.loading());
+  void login(Map<String, String> authData) async {
+    emit(state.copyWith(status: AuthStatus.inProgress));
     try {
-      final res = await authRepo.login(authData);
+      final user = state.user.copyWith(
+        credentials: UserCredentials(
+          identifier: authData['identifier'] ?? '',
+          password: authData['password'] ?? '',
+        ),
+      );
+      final res = await authRepo.login(user);
       res.fold(
-        (error) => emit(AuthState.error(error)),
-        (v) => emit(AuthState.success()),
+        (error) =>
+            emit(state.copyWith(status: AuthStatus.failure, errorMsg: error)),
+        (v) => emit(state.copyWith(status: AuthStatus.success)),
       );
     } catch (e) {
-      emit(AuthState.error(e.toString()));
+      emit(state.copyWith(status: AuthStatus.failure, errorMsg: e.toString()));
     }
   }
 }

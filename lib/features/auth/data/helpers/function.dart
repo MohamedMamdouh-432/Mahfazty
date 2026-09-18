@@ -1,18 +1,23 @@
-import 'package:mahfazty/core/helpers/cache_helper.dart';
+import 'package:mahfazty/core/data/models/user.dart';
 import 'package:mahfazty/core/helpers/constants.dart';
-import 'package:mahfazty/features/auth/data/models/auth_request_body.dart';
+import 'package:mahfazty/core/services/cache_service.dart';
+import 'package:mahfazty/core/services/database_service.dart';
+import 'package:mahfazty/core/services/di_service.dart';
 
-void registerUser(AuthRequestBody authRequestBody) async {
-  // use shared preferences to save the user data (Username, Password)
-  await CacheHelper.setData(Constants.username, authRequestBody.username);
-  await CacheHelper.setData(Constants.password, authRequestBody.password);
+Future<User> registerUser(User user) async {
+  final newUser = await getIt<DBService>().createUser(user);
+  await CacheService.setData(Constants.userId, newUser.id);
+  return newUser;
 }
 
-Future<String?> loginUser(AuthRequestBody authRequestBody) async {
-  // use shared preferences to get the user data (Username, Password)
-  final username = await CacheHelper.getString(Constants.username);
-  if (username != authRequestBody.username) return 'إسم المستخدم غير صحيح';
-  final password = await CacheHelper.getString(Constants.password);
-  if (password != authRequestBody.password) return 'كلمة المرور غير صحيحة';
+Future<String?> loginUser(User user) async {
+  String? userId = await CacheService.getString(Constants.userId);
+  if (userId == null) return 'you are not registered yet!';
+  final storedUser = await getIt<DBService>().fetchUser(userId);
+  if (storedUser == User.empty) return 'you are not registered yet!';
+  if (user.credentials.identifier != storedUser.credentials.identifier)
+    return 'Username is not correct!';
+  if (user.credentials.password != storedUser.credentials.password)
+    return 'Password is Wrong!';
   return null;
 }

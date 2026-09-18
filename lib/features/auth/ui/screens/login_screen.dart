@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mahfazty/core/data/enums/auth_status.dart';
 import 'package:mahfazty/core/routing/routes.dart';
 import 'package:mahfazty/core/theming/colors.dart';
 import 'package:mahfazty/features/auth/logic/cubit/auth_cubit.dart';
-import 'package:mahfazty/features/auth/logic/cubit/auth_state.dart';
 import 'package:mahfazty/features/auth/ui/components/login_form.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -17,13 +17,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthError) {
+        if (state.status == AuthStatus.failure) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
-        } else if (state is AuthSuccess) {
+          ).showSnackBar(SnackBar(content: Text(state.errorMsg ?? '')));
+        } else if (state.status == AuthStatus.success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('تم تسجيل الدخول بنجاح!')),
+            const SnackBar(content: Text('Login is successfully !')),
           );
           context.pushReplacement(Routes.dashboardScreen);
         }

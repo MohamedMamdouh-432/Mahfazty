@@ -5,9 +5,10 @@ import 'package:velocity_x/velocity_x.dart';
 
 class AddTransactionItem extends StatelessWidget {
   final String title;
-  bool isExpense = false;
-  Function() onTap;
-  AddTransactionItem({
+  final bool isExpense;
+  final Function() onTap;
+  
+  const AddTransactionItem({
     required this.title,
     required this.onTap,
     super.key,

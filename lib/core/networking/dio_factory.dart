@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:mahfazty/core/helpers/cache_helper.dart';
-import 'package:mahfazty/core/helpers/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioFactory {
