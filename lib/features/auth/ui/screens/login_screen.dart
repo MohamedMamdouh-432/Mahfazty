@@ -17,11 +17,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.failure) {
+        if (state.status == AuthStatus.unAuthenticated) {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.errorMsg ?? '')));
-        } else if (state.status == AuthStatus.success) {
+        } else if (state.status == AuthStatus.authenticated) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login is successfully !')),
           );

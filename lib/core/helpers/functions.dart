@@ -8,8 +8,3 @@ Future<void> initialize() async {
   await getIt<DBService>().database;
 }
 
-// Future<String> checkUserStatus() async {
-//   String username = (await CacheService.getString(Constants.username));
-//   Logger.info("Username: $username");
-//   return username.isEmpty ? Constants.notLoggingIn : Constants.loggingIn;
-// }

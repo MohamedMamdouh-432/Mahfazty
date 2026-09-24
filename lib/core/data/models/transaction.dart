@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
 
 class Transaction extends Equatable {
@@ -17,7 +16,7 @@ class Transaction extends Equatable {
   final String? attachmentPath;
   final DateTime createdAT;
   final DateTime updatedAT;
-  
+
   const Transaction({
     required this.id,
     required this.userId,
@@ -34,6 +33,17 @@ class Transaction extends Equatable {
     required this.createdAT,
     required this.updatedAT,
   });
+
+  static final Transaction empty = Transaction(
+    id: '',
+    userId: '',
+    accountId: '',
+    type: TransactionType.expense,
+    amount: 0.0,
+    date: DateTime.now(),
+    createdAT: DateTime.now(),
+    updatedAT: DateTime.now(),
+  );
 
   Transaction copyWith({
     String? id,
@@ -68,6 +78,43 @@ class Transaction extends Equatable {
       updatedAT: updatedAT ?? this.updatedAT,
     );
   }
+
+  Map<String, Object> toJson() => {
+    "userId": userId,
+    "accountId": accountId,
+    "categoryId": categoryId ?? '',
+    "type": type.name,
+    "amount": amount,
+    "date": date.toIso8601String(),
+    "title": title ?? '',
+    "description": description ?? '',
+    "note": note ?? '',
+    "transferAccountId": transferAccountId ?? '',
+    "attachmentPath": attachmentPath ?? '',
+    "createdAT": createdAT.toIso8601String(),
+    "updatedAT": updatedAT.toIso8601String(),
+  };
+
+  factory Transaction.fromJson(Map<String, dynamic> jsonData) => Transaction(
+    id: jsonData['id'].toString(),
+    userId: jsonData['userId'],
+    accountId: jsonData['accountId'],
+    categoryId: jsonData['categoryId'],
+    type: TransactionType.values.byName(jsonData['type']),
+    amount: jsonData['amount'],
+    date: DateTime.parse(jsonData['date'].replaceFirst(' ', 'T')).toLocal(),
+    title: jsonData['title'],
+    description: jsonData['description'],
+    note: jsonData['note'],
+    transferAccountId: jsonData['transferAccountId'],
+    attachmentPath: jsonData['attachmentPath'],
+    createdAT: DateTime.parse(
+      jsonData['createdAt'].replaceFirst(' ', 'T'),
+    ).toLocal(),
+    updatedAT: DateTime.parse(
+      jsonData['updatedAt'].replaceFirst(' ', 'T'),
+    ).toLocal(),
+  );
 
   @override
   List<Object> get props {

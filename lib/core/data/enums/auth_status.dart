@@ -1,6 +1,1 @@
-enum AuthStatus {
-  initial,
-  inProgress,
-  success,
-  failure
-}
+enum AuthStatus { initial, inProgress, authenticated, unAuthenticated }

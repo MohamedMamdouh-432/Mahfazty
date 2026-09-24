@@ -16,11 +16,11 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.failure) {
+        if (state.status == AuthStatus.unAuthenticated) {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.errorMsg ?? '')));
-        } else if (state.status == AuthStatus.success) {
+        } else if (state.status == AuthStatus.authenticated) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -50,7 +50,10 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     "Already have an account? ".text.size(14.sp).make(),
                     TextButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        context.read<AuthCubit>().prepareFormData();
+                        context.pop();
+                      },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,

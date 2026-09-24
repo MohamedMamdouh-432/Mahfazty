@@ -54,14 +54,14 @@ class CacheService {
     return sharedPreferences.getString(key);
   }
 
-  static void setSecuredString(String key, String value) async {
+  static Future<void> setSecuredString(String key, String value) async {
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.write(key: key, value: value);
   }
 
-  static Future<String> getSecuredString(String key) async {
+  static Future<String?> getSecuredString(String key) async {
     const flutterSecureStorage = FlutterSecureStorage();
-    return await flutterSecureStorage.read(key: key) ?? '';
+    return await flutterSecureStorage.read(key: key);
   }
 
   static void clearAllSecuredData() async {
