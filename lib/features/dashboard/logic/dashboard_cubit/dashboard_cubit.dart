@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mahfazty/features/add/ui/screens/add_screen.dart';
+import 'package:mahfazty/features/transactions/ui/screens/add_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/enteries_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/expenses_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/notifications_screen.dart';

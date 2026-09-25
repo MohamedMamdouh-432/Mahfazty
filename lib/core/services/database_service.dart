@@ -174,7 +174,7 @@ class DBService {
       path,
       version: 1,
       onCreate: (db, _) => _ensureDBTables(db),
-      // onOpen: _ensureDBTables,
+      onOpen: _showSomeData,
     );
   }
 
@@ -244,7 +244,7 @@ class DBService {
             transferAccountId INTEGER,
             attachmentPath TEXT,
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
-            updatedAt TEXT,
+            updatedAt TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE,
             FOREIGN KEY(categoryId) REFERENCES categories(id) ON DELETE SET NULL,
@@ -258,6 +258,12 @@ class DBService {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> _showSomeData(Database db) async {
+    final data = await db.query("users");
+    debugPrint("Users Data :- 🔽");
+    debugPrint(data.toString());
   }
 
   Future<User> createUser(User user) async {
@@ -312,7 +318,7 @@ class DBService {
 
   Future<List<m.Transaction>> fetchAllTransactions() async {
     final db = await instance.database;
-    final records = await db.query("transactions");
+    final records = await db.query("transactions", orderBy: 'date DESC');
     return records.map((record) => m.Transaction.fromJson(record)).toList();
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mahfazty/core/theming/colors.dart';
-import 'package:mahfazty/features/dashboard/logic/cubit/dashboard_cubit.dart';
+import 'package:mahfazty/features/dashboard/logic/dashboard_cubit/dashboard_cubit.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

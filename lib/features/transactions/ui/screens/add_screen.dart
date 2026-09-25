@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mahfazty/features/add/ui/components/add_transactions_area.dart';
+import 'package:mahfazty/features/transactions/ui/components/add_transactions_area.dart';
 import 'package:mahfazty/features/dashboard/ui/components/overview/latest_entries.dart';
 import 'package:mahfazty/features/dashboard/ui/widgets/normal_head_bar.dart';
 

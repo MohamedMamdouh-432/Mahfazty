@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:mahfazty/features/add/ui/components/add_income_form.dart';
+import 'package:mahfazty/features/transactions/ui/components/add_expense_form.dart';
 import 'package:mahfazty/features/dashboard/ui/components/expenses/expense_date_picker.dart';
 import 'package:mahfazty/features/dashboard/ui/components/head_bar_with_back_button.dart';
 
-class AddIncomeScreen extends StatelessWidget {
-  const AddIncomeScreen({super.key});
+class AddExpenseScreen extends StatelessWidget {
+  const AddExpenseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class AddIncomeScreen extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: HeadBarWithBackButton(title: "Add Income", backPage: 0),
+              child: HeadBarWithBackButton(title: "Add Expense", backPage: 0),
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -23,7 +23,7 @@ class AddIncomeScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate([
                   ExpenseDatePicker(),
                   Gap(10.h),
-                  AddIncomeForm(),
+                  AddExpenseForm(),
                 ]),
               ),
             ),

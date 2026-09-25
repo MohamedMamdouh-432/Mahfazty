@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mahfazty/core/helpers/logger.dart';
 import 'package:mahfazty/core/routing/routes.dart';
-import 'package:mahfazty/features/add/ui/widgets/add_transaction_item.dart';
+import 'package:mahfazty/features/transactions/ui/widgets/add_transaction_item.dart';
 
 class AddTransactionsArea extends StatelessWidget {
   const AddTransactionsArea({super.key});
