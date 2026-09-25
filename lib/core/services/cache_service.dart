@@ -30,7 +30,7 @@ class CacheService {
         await sharedPreferences.setDouble(key, value);
         break;
       default:
-        return null;
+        return;
     }
   }
 

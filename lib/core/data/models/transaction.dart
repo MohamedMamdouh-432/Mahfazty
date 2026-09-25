@@ -80,7 +80,7 @@ class Transaction extends Equatable {
       updatedAT: updatedAT ?? this.updatedAT,
     );
   }
-  
+
   Map<String, Object> toJson() => {
     "userId": userId,
     "accountId": accountId,
@@ -99,24 +99,24 @@ class Transaction extends Equatable {
 
   factory Transaction.fromJson(Map<String, dynamic> jsonData) => Transaction(
     id: jsonData['id'].toString(),
-    userId: jsonData['userId'],
-    accountId: jsonData['accountId'],
+    userId: jsonData['userId'].toString(),
+    accountId: jsonData['accountId'].toString(),
     category: Category.fromJson({
-      "id": jsonData['id'],
+      "id": jsonData['categoryId'],
       "name": jsonData['name'],
       "type": jsonData['type'],
       "parentId": jsonData['parentId'],
       "icon": jsonData['icon'],
       "color": jsonData['color'],
-      "description": jsonData['description'],
+      "description": jsonData['cdescription'],
     }),
     type: TransactionType.values.byName(jsonData['type']),
-    amount: jsonData['amount'],
+    amount: jsonData['amount'] as double,
     date: DateTime.parse(jsonData['date'].replaceFirst(' ', 'T')).toLocal(),
     title: jsonData['title'],
     description: jsonData['description'],
     note: jsonData['note'],
-    transferAccountId: jsonData['transferAccountId'],
+    transferAccountId: jsonData['transferAccountId'].toString(),
     attachmentPath: jsonData['attachmentPath'],
     createdAT: DateTime.parse(
       jsonData['createdAt'].replaceFirst(' ', 'T'),

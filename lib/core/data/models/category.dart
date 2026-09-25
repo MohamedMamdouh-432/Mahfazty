@@ -53,7 +53,7 @@ class Category extends Equatable {
     name: jsonData['name'],
     type: CategoryType.values.byName(jsonData['type']),
     icon: IconData(
-      jsonData['icon'] as int,
+      jsonData["icon"] as int,
       fontFamily: 'MaterialIcons',
     ),
     color: Color(jsonData['color'] as int),

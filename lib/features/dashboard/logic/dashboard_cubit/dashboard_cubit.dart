@@ -13,12 +13,16 @@ part 'dashboard_state.dart';
 class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit() : super(DashboardState.initial);
 
+  void changeScreen(int index) {
+    emit(state.copyWith(screenIdx: index));
+  }
+  
   Widget getScreen() {
     switch (state.screenIdx) {
       case 0:
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 1000),
-          child: curPage(),
+          child: getPage(),
         );
       case 1:
         return Container();
@@ -31,11 +35,11 @@ class DashboardCubit extends Cubit<DashboardState> {
     }
   }
 
-  void changeScreen(int index) {
-    emit(state.copyWith(screenIdx: index));
+  void changePage(int index, [int backPage = 0]) {
+    emit(state.copyWith(curIdx: index, backPage: backPage));
   }
 
-  Widget curPage() {
+  Widget getPage() {
     switch (state.curIdx) {
       case 0:
         return OverviewScreen();
@@ -44,9 +48,5 @@ class DashboardCubit extends Cubit<DashboardState> {
       default:
         return EnteriesScreen(backPage: state.backPage);
     }
-  }
-
-  void changePage(int index, [int backPage = 0]) {
-    emit(state.copyWith(curIdx: index, backPage: backPage));
   }
 }

@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mahfazty/core/routing/routes.dart';
 import 'package:mahfazty/core/services/di_service.dart';
-import 'package:mahfazty/features/transactions/ui/screens/add_expense_screen.dart';
-import 'package:mahfazty/features/transactions/ui/screens/add_income_screen.dart';
 import 'package:mahfazty/features/auth/data/repos/auth_repo.dart';
 import 'package:mahfazty/features/auth/logic/auth_notifier.dart';
 import 'package:mahfazty/features/auth/logic/cubit/auth_cubit.dart';
@@ -13,6 +11,7 @@ import 'package:mahfazty/features/auth/ui/screens/register_screen.dart';
 import 'package:mahfazty/features/auth/ui/screens/starter_screen.dart';
 import 'package:mahfazty/features/dashboard/logic/dashboard_cubit/dashboard_cubit.dart';
 import 'package:mahfazty/features/dashboard/ui/dashboard_screen.dart';
+import 'package:mahfazty/features/transactions/ui/screens/add_transaction_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   refreshListenable: getIt<AuthNotifier>(),
@@ -69,12 +68,8 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
     GoRoute(
-      path: Routes.addExpenseScreen,
-      builder: (context, state) => const AddExpenseScreen(),
-    ),
-    GoRoute(
-      path: Routes.addIncomeScreen,
-      builder: (context, state) => const AddIncomeScreen(),
+      path: Routes.addTransactionScreen,
+      builder: (context, state) => const AddTransactionScreen(),
     ),
   ],
 );

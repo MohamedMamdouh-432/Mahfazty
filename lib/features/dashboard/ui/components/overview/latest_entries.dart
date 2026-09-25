@@ -2,37 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:mahfazty/core/data/enums/transaction_type.dart';
 import 'package:mahfazty/core/theming/colors.dart';
 import 'package:mahfazty/features/dashboard/logic/dashboard_cubit/dashboard_cubit.dart';
 import 'package:mahfazty/features/dashboard/ui/widgets/latest_entry.dart';
+import 'package:mahfazty/features/transactions/logic/transactions_cubit/transactions_cubit.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LatestEntries extends StatelessWidget {
   final int backPage;
-  final List enteries = [
-    {
-      "icon": Icons.money,
-      "category": "Food",
-      "date": "20 Feb 2024",
-      "cost": "20\$ + 0.5% Vat",
-      "paymentMethod": "Google Pay",
-    },
-    {
-      "icon": Icons.directions_bike,
-      "category": "Uber",
-      "date": "13 Mar 2024",
-      "cost": "18\$ + 0.8% Vat",
-      "paymentMethod": "Cash",
-    },
-    {
-      "icon": Icons.shopping_bag_outlined,
-      "category": "Shopping",
-      "date": "11 Mar 2024",
-      "cost": "400\$ + 0.12% Vat",
-      "paymentMethod": "Instapay",
-    },
-  ];
-  LatestEntries(this.backPage, {super.key});
+  const LatestEntries(this.backPage, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +51,43 @@ class LatestEntries extends StatelessWidget {
             ],
           ),
           Gap(20.h),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: enteries.length,
-            itemBuilder: (c, i) => LatestEntry(
-              category: enteries[i]["category"],
-              cost: enteries[i]["cost"],
-              date: enteries[i]["date"],
-              icon: enteries[i]["icon"],
-              paymentMethod: enteries[i]["paymentMethod"],
+          BlocBuilder<TransactionsCubit, TransactionsState>(
+            buildWhen: (p, c) => p.latestEnteries != c.latestEnteries,
+            builder: (_, state) => VxConditional(
+              condition: state.lStatus == TransactionStatus.loading,
+              builder: (_) => Center(
+                child: CircularProgressIndicator(
+                  color: ColorsManager.lightBlue,
+                ),
+              ),
+              fallback: (_) => VxConditional(
+                condition:
+                    state.lStatus == TransactionStatus.successWithoutData,
+                builder: (_) => Center(
+                  child: "No Transaction yet !".text
+                      .size(25.sp)
+                      .color(ColorsManager.mainBlue)
+                      .bold
+                      .italic
+                      .makeCentered(),
+                ),
+                fallback: (_) => VxConditional(
+                  condition: state.lStatus == TransactionStatus.success,
+                  builder: (_) {
+                    final shortList = state.latestEnteries
+                        .getRange(0, 6)
+                        .toList();
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: shortList.length,
+                      itemBuilder: (c, i) => LatestEntry(shortList[i]),
+                      separatorBuilder: (c, i) => Gap(20.h),
+                    );
+                  },
+                ),
+              ),
             ),
-            separatorBuilder: (c, i) => Gap(20.h),
           ),
         ],
       ),

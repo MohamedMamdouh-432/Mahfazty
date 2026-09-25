@@ -23,9 +23,7 @@ class RegisterScreen extends StatelessWidget {
         } else if (state.status == AuthStatus.authenticated) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                'Success Registration with Id=${state.user.id}! login now',
-              ),
+              content: Text('Successful Registration! you can login now'),
             ),
           );
           context.pop();

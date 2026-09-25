@@ -1,8 +1,8 @@
 part of 'transactions_cubit.dart';
 
 class TransactionsState extends Equatable {
-  final List<Transaction> latest_enteries;
-  final List<Transaction> detailed_enteries;
+  final List<Transaction> latestEnteries;
+  final List<Transaction> detailedEnteries;
   final Transaction transaction;
   final TransactionStatus lStatus;
   final TransactionStatus dStatus;
@@ -11,8 +11,8 @@ class TransactionsState extends Equatable {
   final String dErrorMsg;
 
   const TransactionsState({
-    required this.latest_enteries,
-    required this.detailed_enteries,
+    required this.latestEnteries,
+    required this.detailedEnteries,
     required this.transaction,
     required this.lStatus,
     required this.dStatus,
@@ -22,8 +22,8 @@ class TransactionsState extends Equatable {
   });
 
   static final initial = TransactionsState(
-    latest_enteries: [],
-    detailed_enteries: [],
+    latestEnteries: [],
+    detailedEnteries: [],
     transaction: Transaction.empty,
     lStatus: TransactionStatus.initial,
     dStatus: TransactionStatus.initial,
@@ -43,8 +43,8 @@ class TransactionsState extends Equatable {
     String? dErrorMsg,
   }) {
     return TransactionsState(
-      latest_enteries: latest_enteries ?? this.latest_enteries,
-      detailed_enteries: detailed_enteries ?? this.detailed_enteries,
+      latestEnteries: latest_enteries ?? latestEnteries,
+      detailedEnteries: detailed_enteries ?? detailedEnteries,
       transaction: transaction ?? this.transaction,
       lStatus: lStatus ?? this.lStatus,
       dStatus: dStatus ?? this.dStatus,
@@ -56,8 +56,8 @@ class TransactionsState extends Equatable {
 
   @override
   List<Object?> get props => [
-    latest_enteries,
-    detailed_enteries,
+    latestEnteries,
+    detailedEnteries,
     transaction,
     lStatus,
     dStatus,

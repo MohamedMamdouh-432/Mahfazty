@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mahfazty/features/transactions/logic/transaction_form_cubit/transaction_form_cubit.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ExpenseDatePicker extends StatelessWidget {
@@ -19,8 +21,7 @@ class ExpenseDatePicker extends StatelessWidget {
         focusedDay: DateTime.now(),
         calendarFormat: CalendarFormat.week,
         startingDayOfWeek: StartingDayOfWeek.monday,
-        onCalendarCreated: (controller) {},
-        onDaySelected: (selectedDay, focusedDay) {},
+        onDaySelected: (selectedDate, focusedDay) => context.read<TransactionFormCubit>().setDate(selectedDate),
       ),
     );
   }

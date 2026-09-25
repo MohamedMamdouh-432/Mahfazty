@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+import 'package:mahfazty/core/data/models/transaction.dart';
 import 'package:mahfazty/core/theming/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LatestEntry extends StatelessWidget {
-  final IconData icon;
-  final String category, date, cost, paymentMethod;
+  final Transaction transaction;
 
-  const LatestEntry({
-    super.key,
-    required this.icon,
-    required this.category,
-    required this.date,
-    required this.cost,
-    required this.paymentMethod,
-  });
+  const LatestEntry(this.transaction, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +22,32 @@ class LatestEntry extends StatelessWidget {
             color: ColorsManager.brighterGray,
             borderRadius: BorderRadius.circular(15.r),
           ),
-          child: Icon(icon, size: 28.sp),
+          child: Icon(
+            transaction.category!.icon,
+            color: transaction.category!.color,
+            size: 28.sp,
+          ),
         ),
         Gap(10.w),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            category.text.size(18.sp).bold.make(),
-            date.text.size(14.sp).bold.color(ColorsManager.gray).make(),
+            transaction.category!.name.text.size(18.sp).bold.make(),
+            DateFormat("d MMM yyyy")
+                .format(transaction.date.toLocal())
+                .text
+                .size(14.sp)
+                .bold
+                .color(ColorsManager.gray)
+                .make(),
           ],
         ),
         Spacer(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            cost.text.size(16.sp).bold.make(),
-            paymentMethod.text
+            "${transaction.amount} EGP".text.size(16.sp).bold.make(),
+            (transaction.title ?? "").text
                 .size(14.sp)
                 .bold
                 .color(ColorsManager.gray)

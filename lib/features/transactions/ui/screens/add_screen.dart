@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mahfazty/features/transactions/ui/components/add_transactions_area.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mahfazty/core/routing/routes.dart';
 import 'package:mahfazty/features/dashboard/ui/components/overview/latest_entries.dart';
 import 'package:mahfazty/features/dashboard/ui/widgets/normal_head_bar.dart';
+import 'package:mahfazty/features/transactions/ui/widgets/add_transaction_item.dart';
 
 class AddScreen extends StatelessWidget {
   const AddScreen({super.key});
@@ -11,10 +13,14 @@ class AddScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: NormalHeadBar("Add")),
-        SliverToBoxAdapter(child: AddTransactionsArea()),
+        SliverToBoxAdapter(
+          child: AddTransactionItem(
+            title: "Add Transaction",
+            onTap: () => context.push(Routes.addTransactionScreen),
+          ),
+        ),
         SliverToBoxAdapter(child: LatestEntries(0)),
       ],
     );
   }
 }
-

@@ -25,6 +25,7 @@ final cats = [
   // INCOME
   // =========================
   {
+    'id': 1,
     'name': 'Salary',
     'type': 'income',
     'icon': Icons.payments.codePoint,
@@ -32,6 +33,7 @@ final cats = [
     'description': 'Monthly salary or wages',
   },
   {
+    'id': 2,
     'name': 'Freelance',
     'type': 'income',
     'icon': Icons.work_outline.codePoint,
@@ -39,6 +41,7 @@ final cats = [
     'description': 'Income from freelance work',
   },
   {
+    'id': 3,
     'name': 'Business',
     'type': 'income',
     'icon': Icons.business.codePoint,
@@ -46,6 +49,7 @@ final cats = [
     'description': 'Income from business activities',
   },
   {
+    'id': 4,
     'name': 'Investment',
     'type': 'income',
     'icon': Icons.trending_up.codePoint,
@@ -53,6 +57,7 @@ final cats = [
     'description': 'Income from investments',
   },
   {
+    'id': 5,
     'name': 'Gift',
     'type': 'income',
     'icon': Icons.card_giftcard.codePoint,
@@ -60,6 +65,7 @@ final cats = [
     'description': 'Money received as a gift',
   },
   {
+    'id': 6,
     'name': 'Bonus',
     'type': 'income',
     'icon': Icons.stars.codePoint,
@@ -67,6 +73,7 @@ final cats = [
     'description': 'Bonuses and rewards',
   },
   {
+    'id': 7,
     'name': 'Other Income',
     'type': 'income',
     'icon': Icons.attach_money.codePoint,
@@ -78,6 +85,7 @@ final cats = [
   // EXPENSE
   // =========================
   {
+    'id': 8,
     'name': 'Food & Dining',
     'type': 'expense',
     'icon': Icons.restaurant.codePoint,
@@ -85,6 +93,7 @@ final cats = [
     'description': 'Restaurants, meals and food',
   },
   {
+    'id': 9,
     'name': 'Transportation',
     'type': 'expense',
     'icon': Icons.directions_car.codePoint,
@@ -92,6 +101,7 @@ final cats = [
     'description': 'Fuel, taxis, public transportation and commuting',
   },
   {
+    'id': 10,
     'name': 'Shopping',
     'type': 'expense',
     'icon': Icons.shopping_cart.codePoint,
@@ -99,6 +109,7 @@ final cats = [
     'description': 'Clothes, electronics and other shopping',
   },
   {
+    'id': 11,
     'name': 'Bills & Utilities',
     'type': 'expense',
     'icon': Icons.receipt_long.codePoint,
@@ -106,6 +117,7 @@ final cats = [
     'description': 'Electricity, water, gas, internet and bills',
   },
   {
+    'id': 12,
     'name': 'Rent',
     'type': 'expense',
     'icon': Icons.home.codePoint,
@@ -113,6 +125,7 @@ final cats = [
     'description': 'House or apartment rent',
   },
   {
+    'id': 13,
     'name': 'Healthcare',
     'type': 'expense',
     'icon': Icons.local_hospital.codePoint,
@@ -120,6 +133,7 @@ final cats = [
     'description': 'Medical expenses, medicine and healthcare',
   },
   {
+    'id': 14,
     'name': 'Entertainment',
     'type': 'expense',
     'icon': Icons.movie.codePoint,
@@ -127,6 +141,7 @@ final cats = [
     'description': 'Movies, games and entertainment',
   },
   {
+    'id': 15,
     'name': 'Education',
     'type': 'expense',
     'icon': Icons.school.codePoint,
@@ -134,6 +149,7 @@ final cats = [
     'description': 'Courses, books and education',
   },
   {
+    'id': 16,
     'name': 'Subscriptions',
     'type': 'expense',
     'icon': Icons.subscriptions.codePoint,
@@ -141,6 +157,7 @@ final cats = [
     'description': 'Monthly and yearly subscriptions',
   },
   {
+    'id': 17,
     'name': 'Travel',
     'type': 'expense',
     'icon': Icons.flight.codePoint,
@@ -148,6 +165,7 @@ final cats = [
     'description': 'Trips, hotels and travel expenses',
   },
   {
+    'id': 18,
     'name': 'Personal Care',
     'type': 'expense',
     'icon': Icons.spa.codePoint,
@@ -155,6 +173,7 @@ final cats = [
     'description': 'Haircuts, grooming and personal care',
   },
   {
+    'id': 19,
     'name': 'Gifts & Donations',
     'type': 'expense',
     'icon': Icons.volunteer_activism.codePoint,
@@ -162,6 +181,7 @@ final cats = [
     'description': 'Gifts, donations and charitable expenses',
   },
   {
+    'id': 20,
     'name': 'Other Expense',
     'type': 'expense',
     'icon': Icons.more_horiz.codePoint,
@@ -174,15 +194,92 @@ final trans = [
   {
     "userId": 1,
     "accountId": 1,
-    "categoryId": 8,
-    "type": "expense",
-    "amount": 220,
+    "categoryId": 3,
+    "type": "transfer",
+    "amount": 9000,
   },
   {
     "userId": 1,
     "accountId": 1,
-    "categoryId": 2,
+    "categoryId": 4,
+    "type": "income",
+    "amount": 3200,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 7,
+    "type": "transfer",
+    "amount": 4560.50,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 6,
+    "type": "income",
+    "amount": 2530,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 9,
+    "type": "expense",
+    "amount": 450,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 10,
+    "type": "expense",
+    "amount": 630,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 11,
+    "type": "income",
+    "amount": 1250,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 12,
+    "type": "transfer",
+    "amount": 3600,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 13,
+    "type": "income",
+    "amount": 1850,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 14,
+    "type": "expense",
+    "amount": 230,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 15,
+    "type": "transfer",
+    "amount": 2300,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 16,
     "type": "income",
     "amount": 1500,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 17,
+    "type": "expense",
+    "amount": 142,
   }
 ];

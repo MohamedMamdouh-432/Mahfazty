@@ -10,7 +10,6 @@ class DBService {
   final String dbFileName = 'mahfazty.db';
 
   DBService._init();
-  // create an instance later in di or cubit
   static final DBService instance = DBService._init();
 
   Future<Database> get database async {
@@ -170,7 +169,7 @@ class DBService {
   Future<List<m.Transaction>> fetchAllTransactions() async {
     final db = await instance.database;
     final records = await db.rawQuery('''
-      SELECT * 
+      SELECT transactions.*, categories.name as name, categories.type as type, categories.parentId as parentId, categories.icon as icon, categories.color as color, categories.description as cdescription
       FROM transactions INNER JOIN categories
         ON transactions.categoryId = categories.id
       ORDER BY transactions.date DESC

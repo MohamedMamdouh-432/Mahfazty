@@ -5,14 +5,12 @@ import 'package:velocity_x/velocity_x.dart';
 
 class AddTransactionItem extends StatelessWidget {
   final String title;
-  final bool isExpense;
   final Function() onTap;
-  
+
   const AddTransactionItem({
     required this.title,
     required this.onTap,
     super.key,
-    this.isExpense = false,
   });
 
   @override
@@ -20,9 +18,10 @@ class AddTransactionItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: 150.w,
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         decoration: BoxDecoration(
-          color: isExpense ? ColorsManager.mainBlue : Colors.white,
+          color: ColorsManager.mainBlue,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
@@ -33,12 +32,9 @@ class AddTransactionItem extends StatelessWidget {
             Icon(
               Icons.account_balance_wallet_outlined,
               size: 28.sp,
-              color: isExpense ? Colors.white : Colors.black,
+              color: Colors.white,
             ),
-            title.text
-                .size(14.sp)
-                .color(isExpense ? Colors.white : Colors.black)
-                .make(),
+            title.text.size(14.sp).color(Colors.white).make(),
           ],
         ),
       ),
