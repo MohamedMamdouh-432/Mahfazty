@@ -11,9 +11,7 @@ class Category extends Equatable {
   final IconData? icon;
   final Color? color;
   final String? description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  
+
   const Category({
     required this.id,
     required this.name,
@@ -22,9 +20,13 @@ class Category extends Equatable {
     this.icon,
     this.color,
     this.description,
-    required this.createdAt,
-    required this.updatedAt,
   });
+
+  static final empty = Category(
+    id: '',
+    name: '',
+    type: CategoryType.expense,
+  );
 
   Category copyWith({
     String? id,
@@ -34,8 +36,6 @@ class Category extends Equatable {
     IconData? icon,
     Color? color,
     String? description,
-    DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
     return Category(
       id: id ?? this.id,
@@ -45,10 +45,20 @@ class Category extends Equatable {
       icon: icon ?? this.icon,
       color: color ?? this.color,
       description: description ?? this.description,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+  
+  factory Category.fromJson(Map<String, dynamic> jsonData) => Category(
+    id: jsonData['id'].toString(),
+    name: jsonData['name'],
+    type: CategoryType.values.byName(jsonData['type']),
+    icon: IconData(
+      jsonData['icon'] as int,
+      fontFamily: 'MaterialIcons',
+    ),
+    color: Color(jsonData['color'] as int),
+    description: jsonData['description'],
+  );
 
   @override
   List<Object> get props {
@@ -60,8 +70,6 @@ class Category extends Equatable {
       icon ?? IconData(0),
       color ?? Color(0xffffffff),
       description ?? '',
-      createdAt,
-      updatedAt,
     ];
   }
 }

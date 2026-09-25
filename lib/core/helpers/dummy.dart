@@ -1,57 +1,188 @@
-const specialities = [
-  {"name": "General", "imgUrl": "assets/images/general.png"},
-  {"name": "Neurologic", "imgUrl": "assets/images/brain.png"},
-  {"name": "Pediatric", "imgUrl": "assets/images/Iamge.png"},
-  {"name": "Radiology", "imgUrl": "assets/images/Kidneys.png"},
+import 'package:flutter/material.dart';
+
+final users = [
+  {
+    "name": "Mohamed",
+    "language": "arabic",
+    "identifier": "dev",
+    "password": "123",
+  },
 ];
 
-const doctors = [
+final accounts = [
   {
-    "name": "Dr. Randy Wigham",
-    "speciality": "General",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.8,
-    "reviews": 4279,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSleborUKlDqo2xbo3qSyXDV1Fs8B-4M9v6og&s"
+    "userId": 1,
+    "name": "wallet",
+    "type": "cash",
+    "balance": 7500,
+    "currency": "EGP",
+    "isActive": 1,
+  },
+];
+
+final cats = [
+  // =========================
+  // INCOME
+  // =========================
+  {
+    'name': 'Salary',
+    'type': 'income',
+    'icon': Icons.payments.codePoint,
+    'color': Colors.green.toARGB32(),
+    'description': 'Monthly salary or wages',
   },
   {
-    "name": "Dr. Christopher",
-    "speciality": "Neurologic",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.9,
-    "reviews": 3821,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj4GBn8hcw3nGPAAketoOypBQZV_P0QOBGjg&s"
+    'name': 'Freelance',
+    'type': 'income',
+    'icon': Icons.work_outline.codePoint,
+    'color': Colors.blue.toARGB32(),
+    'description': 'Income from freelance work',
   },
   {
-    "name": "Dr. Jennifer",
-    "speciality": "Pediatric",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.7,
-    "reviews": 2199,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvxqeT3EgjGLrIn1ZUepCKpPui0ea5I6RcxQ&s"
+    'name': 'Business',
+    'type': 'income',
+    'icon': Icons.business.codePoint,
+    'color': Colors.purple.toARGB32(),
+    'description': 'Income from business activities',
   },
   {
-    "name": "Dr. Brian",
-    "speciality": "Radiology",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.6,
-    "reviews": 1839,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwAgFV3AJ4N_gMQbJ-5eqIzCyKivV4Ak4UwQ&s"
+    'name': 'Investment',
+    'type': 'income',
+    'icon': Icons.trending_up.codePoint,
+    'color': Colors.orange.toARGB32(),
+    'description': 'Income from investments',
   },
   {
-    "name": "Dr. David",
-    "speciality": "Neurologic",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.8,
-    "reviews": 4279,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_y8yKu3xLWNfMn_KB_CuRmAA-66asINIbHA&s"
+    'name': 'Gift',
+    'type': 'income',
+    'icon': Icons.card_giftcard.codePoint,
+    'color': Colors.pink.toARGB32(),
+    'description': 'Money received as a gift',
   },
   {
-    "name": "Dr. Sarah",
-    "speciality": "Radiology",
-    "workplace": "RSUD Gatot Subroto",
-    "rating": 4.7,
-    "reviews": 2199,
-    "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVfbuBOqXoO-Lhg0TA8C3azV_s_uPphS9Yng&s"
+    'name': 'Bonus',
+    'type': 'income',
+    'icon': Icons.stars.codePoint,
+    'color': Colors.cyan.toARGB32(),
+    'description': 'Bonuses and rewards',
   },
+  {
+    'name': 'Other Income',
+    'type': 'income',
+    'icon': Icons.attach_money.codePoint,
+    'color': Colors.blueGrey.toARGB32(),
+    'description': 'Other sources of income',
+  },
+
+  // =========================
+  // EXPENSE
+  // =========================
+  {
+    'name': 'Food & Dining',
+    'type': 'expense',
+    'icon': Icons.restaurant.codePoint,
+    'color': Colors.deepOrange.toARGB32(),
+    'description': 'Restaurants, meals and food',
+  },
+  {
+    'name': 'Transportation',
+    'type': 'expense',
+    'icon': Icons.directions_car.codePoint,
+    'color': Colors.indigo.toARGB32(),
+    'description': 'Fuel, taxis, public transportation and commuting',
+  },
+  {
+    'name': 'Shopping',
+    'type': 'expense',
+    'icon': Icons.shopping_cart.codePoint,
+    'color': Colors.pink.toARGB32(),
+    'description': 'Clothes, electronics and other shopping',
+  },
+  {
+    'name': 'Bills & Utilities',
+    'type': 'expense',
+    'icon': Icons.receipt_long.codePoint,
+    'color': Colors.brown.toARGB32(),
+    'description': 'Electricity, water, gas, internet and bills',
+  },
+  {
+    'name': 'Rent',
+    'type': 'expense',
+    'icon': Icons.home.codePoint,
+    'color': Colors.deepPurple.toARGB32(),
+    'description': 'House or apartment rent',
+  },
+  {
+    'name': 'Healthcare',
+    'type': 'expense',
+    'icon': Icons.local_hospital.codePoint,
+    'color': Colors.red.toARGB32(),
+    'description': 'Medical expenses, medicine and healthcare',
+  },
+  {
+    'name': 'Entertainment',
+    'type': 'expense',
+    'icon': Icons.movie.codePoint,
+    'color': Colors.purple.toARGB32(),
+    'description': 'Movies, games and entertainment',
+  },
+  {
+    'name': 'Education',
+    'type': 'expense',
+    'icon': Icons.school.codePoint,
+    'color': Colors.teal.toARGB32(),
+    'description': 'Courses, books and education',
+  },
+  {
+    'name': 'Subscriptions',
+    'type': 'expense',
+    'icon': Icons.subscriptions.codePoint,
+    'color': Colors.orange.toARGB32(),
+    'description': 'Monthly and yearly subscriptions',
+  },
+  {
+    'name': 'Travel',
+    'type': 'expense',
+    'icon': Icons.flight.codePoint,
+    'color': Colors.lightBlue.toARGB32(),
+    'description': 'Trips, hotels and travel expenses',
+  },
+  {
+    'name': 'Personal Care',
+    'type': 'expense',
+    'icon': Icons.spa.codePoint,
+    'color': Colors.lightGreen.toARGB32(),
+    'description': 'Haircuts, grooming and personal care',
+  },
+  {
+    'name': 'Gifts & Donations',
+    'type': 'expense',
+    'icon': Icons.volunteer_activism.codePoint,
+    'color': Colors.pink.toARGB32(),
+    'description': 'Gifts, donations and charitable expenses',
+  },
+  {
+    'name': 'Other Expense',
+    'type': 'expense',
+    'icon': Icons.more_horiz.codePoint,
+    'color': Colors.blueGrey.toARGB32(),
+    'description': 'Other expenses',
+  },
+];
+
+final trans = [
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 8,
+    "type": "expense",
+    "amount": 220,
+  },
+  {
+    "userId": 1,
+    "accountId": 1,
+    "categoryId": 2,
+    "type": "income",
+    "amount": 1500,
+  }
 ];

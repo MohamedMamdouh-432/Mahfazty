@@ -1,161 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:mahfazty/core/data/models/transaction.dart' as m;
 import 'package:mahfazty/core/data/models/user.dart';
+import 'package:mahfazty/core/helpers/dummy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:mahfazty/core/data/models/transaction.dart' as m;
 
 class DBService {
   static Database? _database;
   final String dbFileName = 'mahfazty.db';
-  final cats = [
-    // =========================
-    // INCOME
-    // =========================
-    {
-      'name': 'Salary',
-      'type': 'income',
-      'icon': 'salary',
-      'color': '#4CAF50',
-      'description': 'Monthly salary or wages',
-    },
-    {
-      'name': 'Freelance',
-      'type': 'income',
-      'icon': 'freelance',
-      'color': '#2196F3',
-      'description': 'Income from freelance work',
-    },
-    {
-      'name': 'Business',
-      'type': 'income',
-      'icon': 'business',
-      'color': '#9C27B0',
-      'description': 'Income from business activities',
-    },
-    {
-      'name': 'Investment',
-      'type': 'income',
-      'icon': 'investment',
-      'color': '#FF9800',
-      'description': 'Income from investments',
-    },
-    {
-      'name': 'Gift',
-      'type': 'income',
-      'icon': 'gift',
-      'color': '#E91E63',
-      'description': 'Money received as a gift',
-    },
-    {
-      'name': 'Bonus',
-      'type': 'income',
-      'icon': 'bonus',
-      'color': '#00BCD4',
-      'description': 'Bonuses and rewards',
-    },
-    {
-      'name': 'Other Income',
-      'type': 'income',
-      'icon': 'other_income',
-      'color': '#607D8B',
-      'description': 'Other sources of income',
-    },
-
-    // =========================
-    // EXPENSE
-    // =========================
-    {
-      'name': 'Food & Dining',
-      'type': 'expense',
-      'icon': 'food',
-      'color': '#FF5722',
-      'description': 'Restaurants, meals and food',
-    },
-    {
-      'name': 'Transportation',
-      'type': 'expense',
-      'icon': 'transportation',
-      'color': '#3F51B5',
-      'description': 'Fuel, taxis, public transportation and commuting',
-    },
-    {
-      'name': 'Shopping',
-      'type': 'expense',
-      'icon': 'shopping',
-      'color': '#E91E63',
-      'description': 'Clothes, electronics and other shopping',
-    },
-    {
-      'name': 'Bills & Utilities',
-      'type': 'expense',
-      'icon': 'utilities',
-      'color': '#795548',
-      'description': 'Electricity, water, gas, internet and bills',
-    },
-    {
-      'name': 'Rent',
-      'type': 'expense',
-      'icon': 'rent',
-      'color': '#673AB7',
-      'description': 'House or apartment rent',
-    },
-    {
-      'name': 'Healthcare',
-      'type': 'expense',
-      'icon': 'healthcare',
-      'color': '#F44336',
-      'description': 'Medical expenses, medicine and healthcare',
-    },
-    {
-      'name': 'Entertainment',
-      'type': 'expense',
-      'icon': 'entertainment',
-      'color': '#9C27B0',
-      'description': 'Movies, games and entertainment',
-    },
-    {
-      'name': 'Education',
-      'type': 'expense',
-      'icon': 'education',
-      'color': '#009688',
-      'description': 'Courses, books and education',
-    },
-    {
-      'name': 'Subscriptions',
-      'type': 'expense',
-      'icon': 'subscriptions',
-      'color': '#FF9800',
-      'description': 'Monthly and yearly subscriptions',
-    },
-    {
-      'name': 'Travel',
-      'type': 'expense',
-      'icon': 'travel',
-      'color': '#03A9F4',
-      'description': 'Trips, hotels and travel expenses',
-    },
-    {
-      'name': 'Personal Care',
-      'type': 'expense',
-      'icon': 'personal_care',
-      'color': '#8BC34A',
-      'description': 'Haircuts, grooming and personal care',
-    },
-    {
-      'name': 'Gifts & Donations',
-      'type': 'expense',
-      'icon': 'gifts',
-      'color': '#E91E63',
-      'description': 'Gifts, donations and charitable expenses',
-    },
-    {
-      'name': 'Other Expense',
-      'type': 'expense',
-      'icon': 'other_expense',
-      'color': '#607D8B',
-      'description': 'Other expenses',
-    },
-  ];
 
   DBService._init();
   // create an instance later in di or cubit
@@ -174,7 +26,6 @@ class DBService {
       path,
       version: 1,
       onCreate: (db, _) => _ensureDBTables(db),
-      onOpen: _showSomeData,
     );
   }
 
@@ -209,7 +60,8 @@ class DBService {
             description TEXT,
             isActive INTEGER NOT NULL DEFAULT 1 CHECK(isActive IN (0, 1)),
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
-            updatedAt TEXT,
+            updatedAt TEXT DEFAULT CURRENT_TIMESTAMP,
+            
             FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE
           );
         ''');
@@ -221,9 +73,10 @@ class DBService {
             name TEXT NOT NULL,
             type TEXT NOT NULL CHECK(type IN ('income', 'expense')),
             parentId INTEGER,
-            icon TEXT,
-            color TEXT,
+            icon INTEGER,
+            color INTEGER,
             description TEXT,
+            
             FOREIGN KEY(parentId) REFERENCES categories(id) ON DELETE SET NULL
           );
         ''');
@@ -245,6 +98,7 @@ class DBService {
             attachmentPath TEXT,
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
             updatedAt TEXT DEFAULT CURRENT_TIMESTAMP,
+            
             FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE,
             FOREIGN KEY(categoryId) REFERENCES categories(id) ON DELETE SET NULL,
@@ -252,18 +106,15 @@ class DBService {
           );
         ''');
 
+      for (final user in users) await db.insert('users', user);
+      for (final account in accounts) await db.insert('accounts', account);
       for (final cat in cats) await db.insert('categories', cat);
+      for (final tran in trans) await db.insert('transactions', tran);
 
       debugPrint("All Tables are Successfully Created ✅");
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  Future<void> _showSomeData(Database db) async {
-    final data = await db.query("users");
-    debugPrint("Users Data :- 🔽");
-    debugPrint(data.toString());
   }
 
   Future<User> createUser(User user) async {
@@ -318,7 +169,12 @@ class DBService {
 
   Future<List<m.Transaction>> fetchAllTransactions() async {
     final db = await instance.database;
-    final records = await db.query("transactions", orderBy: 'date DESC');
+    final records = await db.rawQuery('''
+      SELECT * 
+      FROM transactions INNER JOIN categories
+        ON transactions.categoryId = categories.id
+      ORDER BY transactions.date DESC
+    ''');
     return records.map((record) => m.Transaction.fromJson(record)).toList();
   }
 

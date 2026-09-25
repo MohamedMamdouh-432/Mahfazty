@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
+import 'package:mahfazty/core/data/models/category.dart';
 
 class Transaction extends Equatable {
   final String id;
   final String userId;
   final String accountId;
-  final String? categoryId;
+  final Category? category;
   final TransactionType type;
   final double amount;
   final DateTime date;
@@ -21,7 +22,7 @@ class Transaction extends Equatable {
     required this.id,
     required this.userId,
     required this.accountId,
-    this.categoryId,
+    this.category,
     required this.type,
     required this.amount,
     required this.date,
@@ -38,6 +39,7 @@ class Transaction extends Equatable {
     id: '',
     userId: '',
     accountId: '',
+    category: Category.empty,
     type: TransactionType.expense,
     amount: 0.0,
     date: DateTime.now(),
@@ -49,7 +51,7 @@ class Transaction extends Equatable {
     String? id,
     String? userId,
     String? accountId,
-    String? categoryId,
+    Category? category,
     TransactionType? type,
     double? amount,
     DateTime? date,
@@ -65,7 +67,7 @@ class Transaction extends Equatable {
       id: id ?? this.id,
       userId: userId ?? this.userId,
       accountId: accountId ?? this.accountId,
-      categoryId: categoryId ?? this.categoryId,
+      category: category ?? this.category,
       type: type ?? this.type,
       amount: amount ?? this.amount,
       date: date ?? this.date,
@@ -78,11 +80,11 @@ class Transaction extends Equatable {
       updatedAT: updatedAT ?? this.updatedAT,
     );
   }
-
+  
   Map<String, Object> toJson() => {
     "userId": userId,
     "accountId": accountId,
-    "categoryId": categoryId ?? '',
+    "categoryId": category?.id ?? '',
     "type": type.name,
     "amount": amount,
     "date": date.toIso8601String(),
@@ -99,7 +101,15 @@ class Transaction extends Equatable {
     id: jsonData['id'].toString(),
     userId: jsonData['userId'],
     accountId: jsonData['accountId'],
-    categoryId: jsonData['categoryId'],
+    category: Category.fromJson({
+      "id": jsonData['id'],
+      "name": jsonData['name'],
+      "type": jsonData['type'],
+      "parentId": jsonData['parentId'],
+      "icon": jsonData['icon'],
+      "color": jsonData['color'],
+      "description": jsonData['description'],
+    }),
     type: TransactionType.values.byName(jsonData['type']),
     amount: jsonData['amount'],
     date: DateTime.parse(jsonData['date'].replaceFirst(' ', 'T')).toLocal(),
@@ -122,7 +132,7 @@ class Transaction extends Equatable {
       id,
       userId,
       accountId,
-      categoryId ?? '',
+      category ?? Category.empty,
       type,
       amount,
       date,
