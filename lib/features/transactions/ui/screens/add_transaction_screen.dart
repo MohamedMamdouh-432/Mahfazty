@@ -21,7 +21,10 @@ class AddTransactionScreen extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: HeadBarWithBackButton(title: "Add Transaction", backPage: 0),
+                child: HeadBarWithBackButton(
+                  title: "Add Transaction",
+                  backPage: 0,
+                ),
               ),
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),

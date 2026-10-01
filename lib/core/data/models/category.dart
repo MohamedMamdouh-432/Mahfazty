@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mahfazty/core/data/enums/category_type.dart';
 
 class Category extends Equatable {
@@ -22,11 +21,7 @@ class Category extends Equatable {
     this.description,
   });
 
-  static final empty = Category(
-    id: '',
-    name: '',
-    type: CategoryType.expense,
-  );
+  static final empty = Category(id: '', name: '', type: CategoryType.expense);
 
   Category copyWith({
     String? id,
@@ -47,12 +42,13 @@ class Category extends Equatable {
       description: description ?? this.description,
     );
   }
-  
+
   factory Category.fromJson(Map<String, dynamic> jsonData) => Category(
     id: jsonData['id'].toString(),
     name: jsonData['name'],
     type: CategoryType.values.byName(jsonData['type']),
     icon: IconData(
+      // ignore: non_const_argument_for_const_parameter
       jsonData["icon"] as int,
       fontFamily: 'MaterialIcons',
     ),
@@ -67,7 +63,7 @@ class Category extends Equatable {
       name,
       type,
       parentId ?? '',
-      icon ?? IconData(0),
+      icon ?? Icons.abc,
       color ?? Color(0xffffffff),
       description ?? '',
     ];

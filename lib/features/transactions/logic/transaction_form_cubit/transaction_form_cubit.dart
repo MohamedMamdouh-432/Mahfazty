@@ -52,6 +52,7 @@ class TransactionFormCubit extends Cubit<TransactionFormState> {
   void addTransactions() async {
     emit(state.copyWith(addStatus: AddTransactionStatus.pending));
     try {
+      debugPrint(state.transaction.toString());
       final newTransaction = await transactionsRepo.addTransaction(
         state.transaction,
       );

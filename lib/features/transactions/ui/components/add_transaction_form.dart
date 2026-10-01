@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
 import 'package:mahfazty/core/helpers/dummy.dart';
 import 'package:mahfazty/core/widgets/generic_button.dart';
 import 'package:mahfazty/core/widgets/generic_text_field.dart';
+import 'package:mahfazty/features/dashboard/logic/dashboard_cubit/dashboard_cubit.dart';
 import 'package:mahfazty/features/transactions/logic/transaction_form_cubit/transaction_form_cubit.dart';
 import 'package:mahfazty/features/transactions/logic/transactions_cubit/transactions_cubit.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -27,18 +27,19 @@ class AddExpenseForm extends StatelessWidget {
             const SnackBar(content: Text('Transaction added successfully ✅')),
           );
           context.read<TransactionsCubit>().fetchLatestTransactions();
-          context.pop();
+          context.read<DashboardCubit>().changeScreen(0);
+          context.read<DashboardCubit>().changePage(0);
         }
       },
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: Column(
-          spacing: 20.h,
+          spacing: 5.h,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             "Category".text.color(Colors.black45).size(16.sp).make(),
             DropdownMenu<String>(
-              initialSelection: cats.first['id'] as String,
+              initialSelection: cats.first['id'].toString(),
               label: const Text('Select option'),
               onSelected: (value) => context
                   .read<TransactionFormCubit>()

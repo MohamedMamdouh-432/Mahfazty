@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mahfazty/features/transactions/ui/screens/add_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/enteries_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/expenses_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/notifications_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/overview_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/reminders_screen.dart';
+import 'package:mahfazty/features/transactions/ui/screens/add_transaction_screen.dart';
 
 part 'dashboard_state.dart';
 
@@ -16,7 +16,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   void changeScreen(int index) {
     emit(state.copyWith(screenIdx: index));
   }
-  
+
   Widget getScreen() {
     switch (state.screenIdx) {
       case 0:
@@ -27,7 +27,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       case 1:
         return Container();
       case 2:
-        return AddScreen();
+        return AddTransactionScreen();
       case 3:
         return NotificationsScreen();
       default:

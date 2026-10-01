@@ -13,7 +13,7 @@ class TransactionsRepo {
     throw UnimplementedError();
   }
 
-  Future<Transaction> addTransaction(Transaction transaction) {
-    throw UnimplementedError();
+  Future<Transaction> addTransaction(Transaction transaction) async {
+    return await getIt<DBService>().createTransaction(transaction);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mahfazty/core/theming/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AddTransactionItem extends StatelessWidget {
@@ -19,15 +18,15 @@ class AddTransactionItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 150.w,
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
-          color: ColorsManager.mainBlue,
+          color: Colors.green,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          spacing: 5.h,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 10.h,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.account_balance_wallet_outlined,
