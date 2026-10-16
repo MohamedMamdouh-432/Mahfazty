@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/enteries_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/expenses_screen.dart';
-import 'package:mahfazty/features/dashboard/ui/screens/notifications_screen.dart';
+import 'package:mahfazty/features/notifications/ui/screens/notifications_screen.dart';
 import 'package:mahfazty/features/dashboard/ui/screens/overview_screen.dart';
-import 'package:mahfazty/features/dashboard/ui/screens/reminders_screen.dart';
+import 'package:mahfazty/features/reminders/ui/screens/reminders_screen.dart';
+import 'package:mahfazty/features/settings/ui/screens/settings_screen.dart';
 import 'package:mahfazty/features/transactions/ui/screens/add_transaction_screen.dart';
 
 part 'dashboard_state.dart';
@@ -19,24 +20,24 @@ class DashboardCubit extends Cubit<DashboardState> {
 
   Widget getScreen() {
     switch (state.screenIdx) {
-      case 0:
+      case 0: // OverViewScreen
         return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 500),
           child: getPage(),
         );
       case 1:
-        return Container();
+        return RemindersScreen();
       case 2:
         return AddTransactionScreen();
       case 3:
         return NotificationsScreen();
       default:
-        return RemindersScreen();
+        return SettingsScreen();
     }
   }
 
-  void changePage(int index, [int backPage = 0]) {
-    emit(state.copyWith(curIdx: index, backPage: backPage));
+  void changePage(int index) {
+    emit(state.copyWith(curIdx: index));
   }
 
   Widget getPage() {
@@ -46,7 +47,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       case 1:
         return ExpensesScreen();
       default:
-        return EnteriesScreen(backPage: state.backPage);
+        return EnteriesScreen();
     }
   }
 }

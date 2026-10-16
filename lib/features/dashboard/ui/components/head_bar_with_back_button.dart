@@ -7,12 +7,10 @@ import 'package:velocity_x/velocity_x.dart';
 
 class HeadBarWithBackButton extends StatelessWidget {
   final String title;
-  final int backPage;
   
   const HeadBarWithBackButton({
     super.key,
     required this.title,
-    required this.backPage,
   });
 
   @override
@@ -41,8 +39,7 @@ class HeadBarWithBackButton extends StatelessWidget {
             ),
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-              onPressed: () =>
-                  context.read<DashboardCubit>().changePage(backPage),
+              onPressed: () => context.read<DashboardCubit>().changePage(0),
             ),
           ),
           Gap(70.w),

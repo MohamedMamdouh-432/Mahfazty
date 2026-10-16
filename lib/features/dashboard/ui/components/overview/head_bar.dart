@@ -15,7 +15,15 @@ class HeadBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          "Overview".text.size(23.sp).bold.make(),
+          Column(
+            spacing: 0,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "Hi, Mohamed".text.size(14.sp).bold.italic.make(),
+              "Dashboard".text.size(23.sp).bold.widest.make(),
+            ],
+          ),
           CircleAvatar(
             backgroundImage: AssetImage('assets/images/profile_picture.jpeg'),
             radius: 27.r,

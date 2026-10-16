@@ -1,24 +1,22 @@
 part of 'dashboard_cubit.dart';
 
 class DashboardState extends Equatable {
-  final int screenIdx, curIdx, backPage;
+  final int screenIdx, curIdx;
 
   const DashboardState({
     this.screenIdx = 0,
     this.curIdx = 0,
-    required this.backPage,
   });
 
-  static const initial = DashboardState(screenIdx: 0, curIdx: 0, backPage: 0);
+  static const initial = DashboardState(screenIdx: 0, curIdx: 0);
 
-  DashboardState copyWith({int? screenIdx, int? curIdx, int? backPage}) {
+  DashboardState copyWith({int? screenIdx, int? curIdx}) {
     return DashboardState(
       screenIdx: screenIdx ?? this.screenIdx,
       curIdx: curIdx ?? this.curIdx,
-      backPage: backPage ?? this.backPage,
     );
   }
 
   @override
-  List<Object> get props => [screenIdx, curIdx, backPage];
+  List<Object> get props => [screenIdx, curIdx];
 }

@@ -9,7 +9,7 @@ class TransactionsRepo {
     return enteries;
   }
 
-  Future<List<Transaction>> getDetailedTransactions() {
+  Future<List<Transaction>> getDetailedTransactions(DateTime date) {
     throw UnimplementedError();
   }
 

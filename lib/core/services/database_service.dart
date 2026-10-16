@@ -24,11 +24,11 @@ class DBService {
     return await openDatabase(
       path,
       version: 1,
-      onCreate: (db, _) => _ensureDBTables(db),
+      onCreate: (db, _) => _createTables(db),
     );
   }
 
-  Future<void> _ensureDBTables(Database db) async {
+  Future<void> _createTables(Database db) async {
     try {
       debugPrint("Creating the tables ... ▶️");
 
@@ -108,7 +108,6 @@ class DBService {
       for (final user in users) await db.insert('users', user);
       for (final account in accounts) await db.insert('accounts', account);
       for (final cat in cats) await db.insert('categories', cat);
-      for (final tran in trans) await db.insert('transactions', tran);
 
       debugPrint("All Tables are Successfully Created ✅");
     } catch (e) {
@@ -198,6 +197,11 @@ class DBService {
       where: "id = ?",
       whereArgs: [int.parse(id)],
     );
+  }
+
+  Future<int> deleteAllTransactions() async {
+    final db = await instance.database;
+    return await db.delete("transactions");
   }
 
   Future<int> deleteTransaction(String id) async {

@@ -24,7 +24,7 @@ class SummarySection extends StatelessWidget {
             SummaryCard(
               title: 'Total Expense',
               amount: "298.16",
-              onTap: () => context.read<DashboardCubit>().changePage(1, 0),
+              onTap: () => context.read<DashboardCubit>().changePage(1),
             ),
             Gap(10.w),
             SummaryCard(title: 'Monthly Rate', amount: "3,385.50"),

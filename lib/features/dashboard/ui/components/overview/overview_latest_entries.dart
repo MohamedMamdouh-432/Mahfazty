@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,13 +7,13 @@ import 'package:gap/gap.dart';
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
 import 'package:mahfazty/core/theming/colors.dart';
 import 'package:mahfazty/features/dashboard/logic/dashboard_cubit/dashboard_cubit.dart';
+import 'package:mahfazty/features/dashboard/ui/components/overview/overview_empty_entries.dart';
 import 'package:mahfazty/features/dashboard/ui/widgets/latest_entry.dart';
 import 'package:mahfazty/features/transactions/logic/transactions_cubit/transactions_cubit.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class LatestEntries extends StatelessWidget {
-  final int backPage;
-  const LatestEntries(this.backPage, {super.key});
+class OverviewLatestEntries extends StatelessWidget {
+  const OverviewLatestEntries({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,7 @@ class LatestEntries extends StatelessWidget {
               "Latest Entries".text.size(18.sp).bold.make(),
               InkWell(
                 borderRadius: BorderRadius.circular(10.r),
-                onTap: () =>
-                    context.read<DashboardCubit>().changePage(2, backPage),
+                onTap: () => context.read<DashboardCubit>().changePage(2),
                 child: Container(
                   height: 30.h,
                   width: 40.w,
@@ -63,19 +64,12 @@ class LatestEntries extends StatelessWidget {
               fallback: (_) => VxConditional(
                 condition:
                     state.lStatus == TransactionStatus.successWithoutData,
-                builder: (_) => Center(
-                  child: "No Transaction yet !".text
-                      .size(25.sp)
-                      .color(ColorsManager.mainBlue)
-                      .bold
-                      .italic
-                      .makeCentered(),
-                ),
+                builder: (_) => OverviewEmptyEntries(),
                 fallback: (_) => VxConditional(
                   condition: state.lStatus == TransactionStatus.success,
                   builder: (_) {
                     final shortList = state.latestEnteries
-                        .getRange(0, 6)
+                        .getRange(0, min(10, state.latestEnteries.length))
                         .toList();
                     return ListView.separated(
                       shrinkWrap: true,

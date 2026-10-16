@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mahfazty/features/dashboard/ui/components/overview/head_bar.dart';
-import 'package:mahfazty/features/dashboard/ui/components/overview/latest_entries.dart';
+import 'package:mahfazty/features/dashboard/ui/components/overview/overview_latest_entries.dart';
 import 'package:mahfazty/features/dashboard/ui/components/overview/summary_section.dart';
 
 class OverviewScreen extends StatelessWidget {
@@ -12,7 +12,7 @@ class OverviewScreen extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(child: HeadBar()),
         SliverToBoxAdapter(child: SummarySection()),
-        SliverToBoxAdapter(child: LatestEntries(0)),
+        SliverToBoxAdapter(child: OverviewLatestEntries()),
       ],
     );
   }

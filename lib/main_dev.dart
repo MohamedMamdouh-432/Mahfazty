@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mahfazty/core/services/di_service.dart';
 import 'package:mahfazty/core/helpers/functions.dart';
+import 'package:mahfazty/core/services/di_service.dart';
 import 'package:mahfazty/launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupDI();
-  await initialize();
+  await initServices();
   await ScreenUtil.ensureScreenSize();
+  
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarContrastEnforced: true,
+      systemStatusBarContrastEnforced: true,
+    ),
+  );
+  
   runApp(const Launcher());
 }

@@ -20,7 +20,8 @@ class DashboardScreen extends StatelessWidget {
               iconSize: 28.sp,
               selectedItemColor: ColorsManager.mainBlue,
               unselectedItemColor: ColorsManager.brightGray,
-              onTap: (index) => context.read<DashboardCubit>().changeScreen(index),
+              onTap: (index) =>
+                  context.read<DashboardCubit>().changeScreen(index),
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home_filled),
@@ -48,6 +49,17 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () async {
+            //     int res = await getIt<DBService>().deleteAllTransactions();
+            //     debugPrint(res.toString());
+            //   },
+            //   child: Icon(
+            //     Icons.delete_outline_rounded,
+            //     color: Colors.red,
+            //     size: 30,
+            //   ),
+            // ),
           ),
         );
       },

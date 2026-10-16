@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
 import 'package:mahfazty/core/data/models/transaction.dart';
 import 'package:mahfazty/features/transactions/data/repos/transactions_repo.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 part 'transactions_state.dart';
 
@@ -21,6 +22,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
       emit(
         state.copyWith(
           latest_enteries: latestEnteries,
+          detailed_enteries: latestEnteries.filter((entry) => entry.date == DateTime.now()).toList(),
           lStatus: latestEnteries.isEmpty
               ? TransactionStatus.successWithoutData
               : TransactionStatus.success,
@@ -40,7 +42,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
   void fetchDetailedTransactions() async {
     emit(state.copyWith(lStatus: TransactionStatus.loading));
     try {
-      final detailedEnteries = await transactionsRepo.getDetailedTransactions();
+      final detailedEnteries = await transactionsRepo.getDetailedTransactions(DateTime.now());
       emit(
         state.copyWith(
           detailed_enteries: detailedEnteries,

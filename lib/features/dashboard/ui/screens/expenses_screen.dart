@@ -4,7 +4,8 @@ import 'package:mahfazty/features/dashboard/ui/components/expenses/expense_date_
 import 'package:mahfazty/features/dashboard/ui/components/expenses/total_expenses.dart';
 import 'package:mahfazty/features/dashboard/ui/components/expenses/visual_expenses_details.dart';
 import 'package:mahfazty/features/dashboard/ui/components/head_bar_with_back_button.dart';
-import 'package:mahfazty/features/dashboard/ui/components/overview/latest_entries.dart';
+
+import '../components/expenses/expense_detailes_entries.dart';
 
 class ExpensesScreen extends StatelessWidget {
   const ExpensesScreen({super.key});
@@ -14,7 +15,7 @@ class ExpensesScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: HeadBarWithBackButton(title: "Total Expenses", backPage: 0),
+          child: HeadBarWithBackButton(title: "Total Expenses"),
         ),
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -23,7 +24,7 @@ class ExpensesScreen extends StatelessWidget {
               ExpenseDatePicker(),
               TotalExpenses(),
               VisualExpensesDetails(),
-              LatestEntries(1),
+              ExpenseDetailesEntries(),
             ]),
           ),
         ),

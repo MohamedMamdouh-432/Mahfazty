@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:mahfazty/core/services/di_service.dart';
 import 'package:mahfazty/features/dashboard/ui/components/expenses/expense_date_picker.dart';
-import 'package:mahfazty/features/dashboard/ui/components/head_bar_with_back_button.dart';
+import 'package:mahfazty/features/dashboard/ui/widgets/normal_head_bar.dart';
 import 'package:mahfazty/features/transactions/data/repos/transactions_repo.dart';
 import 'package:mahfazty/features/transactions/logic/transaction_form_cubit/transaction_form_cubit.dart';
 import 'package:mahfazty/features/transactions/ui/components/add_transaction_form.dart';
@@ -21,10 +21,7 @@ class AddTransactionScreen extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: HeadBarWithBackButton(
-                  title: "Add Transaction",
-                  backPage: 0,
-                ),
+                child: NormalHeadBar("Add Transaction"),
               ),
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
