@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mahfazty/core/theming/colors.dart';
+import 'package:mahfazty/features/transactions/logic/transactions_cubit/transactions_cubit.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class TotalExpenses extends StatelessWidget {
@@ -8,40 +10,24 @@ class TotalExpenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250.h,
-      width: 200,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-              color: ColorsManager.lightBlue,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withAlpha(1),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: "\$1600".text
-                .size(24.sp)
-                .bold
-                .color(Colors.white)
-                .makeCentered(),
+    return BlocBuilder<TransactionsCubit, TransactionsState>(
+        builder: (_, state) => Container(
+          height: 40.h,
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            color: Colors.green.shade300,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(20),
           ),
-          "You have Spend total 60% of your budget".text
-              .size(16.sp)
-              .center
-              .bold
-              .make(),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              "Total Expenses:".text.size(16.sp).bold.make(),
+              "${state.dayStatistics.total} EGP".text.size(16.sp).bold.make(),
+            ],
+          ),
+        ),
     );
   }
 }

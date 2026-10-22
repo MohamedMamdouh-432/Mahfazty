@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahfazty/core/data/enums/transaction_type.dart';
+import 'package:mahfazty/core/data/models/day_statistics.dart';
 import 'package:mahfazty/core/data/models/transaction.dart';
 import 'package:mahfazty/features/transactions/data/repos/transactions_repo.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -16,14 +17,18 @@ class TransactionsCubit extends Cubit<TransactionsState> {
   void fetchLatestTransactions() async {
     emit(state.copyWith(lStatus: TransactionStatus.loading));
     try {
-      debugPrint("Printing Latest Enteries ... ⏬");
-      final latestEnteries = await transactionsRepo.getLatestTransactions();
-      debugPrint(latestEnteries.toString());
+      final latestEntries = await transactionsRepo.getLatestTransactions();
       emit(
         state.copyWith(
-          latest_enteries: latestEnteries,
-          detailed_enteries: latestEnteries.filter((entry) => entry.date == DateTime.now()).toList(),
-          lStatus: latestEnteries.isEmpty
+          latest_enteries: latestEntries,
+          detailed_enteries: latestEntries.where((entry) {
+            final date = entry.date;
+            final today = DateTime.now();
+            return date.year == today.year &&
+                date.month == today.month &&
+                date.day == today.day;
+          }).toList(),
+          lStatus: latestEntries.isEmpty
               ? TransactionStatus.successWithoutData
               : TransactionStatus.success,
         ),
@@ -39,19 +44,23 @@ class TransactionsCubit extends Cubit<TransactionsState> {
     }
   }
 
-  void fetchDetailedTransactions() async {
-    emit(state.copyWith(lStatus: TransactionStatus.loading));
+  void fetchDetailedTransactions(DateTime date) async {
+    emit(state.copyWith(dStatus: TransactionStatus.loading));
     try {
-      final detailedEnteries = await transactionsRepo.getDetailedTransactions(DateTime.now());
+      final result = await transactionsRepo.getDetailedTransactions(date);
+      debugPrint("Printing Detailed Transactions Result: ");
+      debugPrint(result.toString());
       emit(
         state.copyWith(
-          detailed_enteries: detailedEnteries,
-          dStatus: detailedEnteries.isEmpty
+          detailed_enteries: result['entries'] as List<Transaction>,
+          dayStatistics: DayStatistics.fromJson(result['statistics']),
+          dStatus: result['entries'].isEmpty
               ? TransactionStatus.successWithoutData
               : TransactionStatus.success,
         ),
       );
     } catch (e) {
+      debugPrint(e.toString());
       emit(
         state.copyWith(
           dStatus: TransactionStatus.failure,

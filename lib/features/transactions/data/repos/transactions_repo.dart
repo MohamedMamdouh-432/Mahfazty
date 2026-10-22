@@ -4,13 +4,11 @@ import 'package:mahfazty/core/services/di_service.dart';
 
 class TransactionsRepo {
   Future<List<Transaction>> getLatestTransactions() async {
-    final List<Transaction> enteries = await getIt<DBService>()
-        .fetchAllTransactions();
-    return enteries;
+    return await getIt<DBService>().fetchAllTransactions();
   }
 
-  Future<List<Transaction>> getDetailedTransactions(DateTime date) {
-    throw UnimplementedError();
+  Future<Map<String, dynamic>> getDetailedTransactions(DateTime date) async {
+    return await getIt<DBService>().fetchDetailedTransactions(date);
   }
 
   Future<Transaction> addTransaction(Transaction transaction) async {

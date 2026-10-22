@@ -4,6 +4,7 @@ class TransactionsState extends Equatable {
   final List<Transaction> latestEnteries;
   final List<Transaction> detailedEnteries;
   final Transaction transaction;
+  final DayStatistics dayStatistics;
   final TransactionStatus lStatus;
   final TransactionStatus dStatus;
   final AddTransactionStatus addStatus;
@@ -14,6 +15,7 @@ class TransactionsState extends Equatable {
     required this.latestEnteries,
     required this.detailedEnteries,
     required this.transaction,
+    required this.dayStatistics,
     required this.lStatus,
     required this.dStatus,
     required this.addStatus,
@@ -25,6 +27,7 @@ class TransactionsState extends Equatable {
     latestEnteries: [],
     detailedEnteries: [],
     transaction: Transaction.empty,
+    dayStatistics: DayStatistics.empty,
     lStatus: TransactionStatus.initial,
     dStatus: TransactionStatus.initial,
     addStatus: AddTransactionStatus.initial,
@@ -36,6 +39,7 @@ class TransactionsState extends Equatable {
     List<Transaction>? latest_enteries,
     List<Transaction>? detailed_enteries,
     Transaction? transaction,
+    DayStatistics? dayStatistics,
     TransactionStatus? lStatus,
     TransactionStatus? dStatus,
     AddTransactionStatus? addStatus,
@@ -46,6 +50,7 @@ class TransactionsState extends Equatable {
       latestEnteries: latest_enteries ?? latestEnteries,
       detailedEnteries: detailed_enteries ?? detailedEnteries,
       transaction: transaction ?? this.transaction,
+      dayStatistics: dayStatistics ?? this.dayStatistics,
       lStatus: lStatus ?? this.lStatus,
       dStatus: dStatus ?? this.dStatus,
       addStatus: addStatus ?? this.addStatus,
@@ -59,6 +64,7 @@ class TransactionsState extends Equatable {
     latestEnteries,
     detailedEnteries,
     transaction,
+    dayStatistics,
     lStatus,
     dStatus,
     addStatus,

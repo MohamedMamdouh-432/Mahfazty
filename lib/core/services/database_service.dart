@@ -176,6 +176,71 @@ class DBService {
     return records.map((record) => m.Transaction.fromJson(record)).toList();
   }
 
+  Future<Map<String, dynamic>> fetchDetailedTransactions(
+      DateTime date,
+      ) async {
+    final db = await instance.database;
+
+    final stringDate = date.toIso8601String().split('T').first;
+
+    final records = await db.rawQuery(
+      '''
+    SELECT
+      transactions.*,
+      categories.name AS name,
+      categories.type AS type,
+      categories.parentId AS parentId,
+      categories.icon AS icon,
+      categories.color AS color,
+      categories.description AS cdescription
+    FROM transactions
+    INNER JOIN categories
+      ON transactions.categoryId = categories.id
+    WHERE DATE(transactions.date) = ?
+    ''',
+      [stringDate],
+    );
+
+    final res = await db.rawQuery(
+      '''
+    SELECT
+      c.name,
+      c.color,
+      SUM(t.amount) AS amount
+    FROM transactions AS t
+    INNER JOIN categories AS c
+      ON c.id = t.categoryId
+    WHERE DATE(t.date) = ?
+    GROUP BY t.categoryId
+
+    UNION ALL
+
+    SELECT
+      'Total' AS name,
+      NULL AS color,
+      SUM(t.amount) AS amount
+    FROM transactions AS t
+    WHERE DATE(t.date) = ?
+    ''',
+      [stringDate, stringDate],
+    );
+
+    final List<Map<String, dynamic>> statistics = res.map((item) {
+      return {
+        'name': item['name'],
+        'color': item['color'],
+        'amount': item['amount'],
+      };
+    }).toList();
+
+    return {
+      'entries': records
+          .map((record) => m.Transaction.fromJson(record))
+          .toList(),
+      'statistics': statistics,
+    };
+  }
+
   Future<m.Transaction> fetchTransaction(String id) async {
     final db = await instance.database;
     final records = await db.query(
