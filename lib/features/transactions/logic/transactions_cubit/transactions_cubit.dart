@@ -21,13 +21,6 @@ class TransactionsCubit extends Cubit<TransactionsState> {
       emit(
         state.copyWith(
           latest_enteries: latestEntries,
-          detailed_enteries: latestEntries.where((entry) {
-            final date = entry.date;
-            final today = DateTime.now();
-            return date.year == today.year &&
-                date.month == today.month &&
-                date.day == today.day;
-          }).toList(),
           lStatus: latestEntries.isEmpty
               ? TransactionStatus.successWithoutData
               : TransactionStatus.success,

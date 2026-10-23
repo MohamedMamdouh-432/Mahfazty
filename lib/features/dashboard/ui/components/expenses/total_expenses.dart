@@ -13,7 +13,7 @@ class TotalExpenses extends StatelessWidget {
     return BlocBuilder<TransactionsCubit, TransactionsState>(
         builder: (_, state) => Container(
           height: 40.h,
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
+          margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
           padding: EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             color: Colors.green.shade300,

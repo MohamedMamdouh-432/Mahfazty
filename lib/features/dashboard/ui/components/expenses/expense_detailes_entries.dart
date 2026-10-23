@@ -21,7 +21,7 @@ class ExpenseDetailesEntries extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.sp),
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(

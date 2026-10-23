@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mahfazty/core/data/enums/transaction_type.dart';
 import 'package:mahfazty/features/transactions/logic/transactions_cubit/transactions_cubit.dart';
 
 class VisualExpensesDetails extends StatelessWidget {
@@ -8,19 +9,21 @@ class VisualExpensesDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 310,
-      width: 320,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(167, 230, 229, 229),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: BlocBuilder<TransactionsCubit, TransactionsState>(
-          builder: (_, state) {
-            final dstats = state.dayStatistics;
-            return Column(
+    return BlocBuilder<TransactionsCubit, TransactionsState>(
+      builder: (_, state) {
+        final dstats = state.dayStatistics;
+        return Visibility(
+          visible: state.dStatus != TransactionStatus.successWithoutData,
+          child: Container(
+            height: 310,
+            width: 320,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(167, 230, 229, 229),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
               children: [
                 SizedBox(
                   height: 290,
@@ -37,18 +40,18 @@ class VisualExpensesDetails extends StatelessWidget {
                               centerSpaceRadius: 90,
                               borderData: FlBorderData(show: false),
                               sections: [
-                                ...dstats.statistics.map(
-                                      (stat) {
-                                        final int value = (stat["amount"] / dstats.total) * 100;
-                                        return PieChartSectionData(
-                                          value: double.parse(value.toString()),
-                                          color: stat["color"] as Color,
-                                          title: "$value%",
-                                          radius: 25,
-                                          titlePositionPercentageOffset: 1.7,
-                                        );
-                                      },
-                                ),
+                                ...dstats.statistics.map((stat) {
+                                  double value =
+                                      (stat["amount"] / dstats.total) * 100;
+                                  value = value.toInt() == 0 ? 1.0 : value;
+                                  return PieChartSectionData(
+                                    value: value,
+                                    color: Color(stat["color"] as int),
+                                    title: "${value.toInt()}%",
+                                    radius: 25,
+                                    titlePositionPercentageOffset: 1.7,
+                                  );
+                                }),
                                 // Hidden bottom half
                                 PieChartSectionData(
                                   value: 100,
@@ -87,19 +90,26 @@ class VisualExpensesDetails extends StatelessWidget {
                             runSpacing: 12,
                             children: dstats.statistics
                                 .map(
-                                  (stat) =>
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CircleAvatar(radius: 7, backgroundColor: stat["color"] as Color),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          stat["name"] as String,
-                                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                                  (stat) => Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 7,
+                                        backgroundColor: Color(
+                                          stat["color"] as int,
                                         ),
-                                      ],
-                                    ),
-                            )
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        stat["name"] as String,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
                                 .toList(),
                           ),
                         ),
@@ -108,9 +118,10 @@ class VisualExpensesDetails extends StatelessWidget {
                   ),
                 ),
               ],
-            );
-          }
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

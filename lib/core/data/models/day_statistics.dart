@@ -22,7 +22,7 @@ class DayStatistics extends Equatable {
   }
 
   factory DayStatistics.fromJson(List<Map<String, dynamic>> allStatistics) {
-    final double sTotal = allStatistics.last['amount'];
+    final double sTotal = allStatistics.last['amount'] ?? 0.0;
     allStatistics.removeLast();
     return DayStatistics(
         total: sTotal,

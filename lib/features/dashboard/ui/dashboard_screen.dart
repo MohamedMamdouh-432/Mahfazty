@@ -51,13 +51,14 @@ class DashboardScreen extends StatelessWidget {
             ),
             // floatingActionButton: FloatingActionButton(
             //   onPressed: () async {
-            //     int res = await getIt<DBService>().deleteAllTransactions();
+            //     int res = await getIt<DBService>().deleteTransaction("21");
+            //     context.read<TransactionsCubit>().fetchLatestTransactions();
             //     debugPrint(res.toString());
             //   },
             //   child: Icon(
             //     Icons.delete_outline_rounded,
             //     color: Colors.red,
-            //     size: 30,
+            //     size: 35,
             //   ),
             // ),
           ),

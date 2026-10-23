@@ -176,9 +176,7 @@ class DBService {
     return records.map((record) => m.Transaction.fromJson(record)).toList();
   }
 
-  Future<Map<String, dynamic>> fetchDetailedTransactions(
-      DateTime date,
-      ) async {
+  Future<Map<String, dynamic>> fetchDetailedTransactions(DateTime date) async {
     final db = await instance.database;
 
     final stringDate = date.toIso8601String().split('T').first;

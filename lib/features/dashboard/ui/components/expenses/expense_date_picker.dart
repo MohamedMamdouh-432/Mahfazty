@@ -14,20 +14,20 @@ class ExpenseDatePicker extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.all(20),
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: BlocBuilder<TransactionFormCubit, TransactionFormState>(
           builder: (c, state) => TableCalendar(
             firstDay: DateTime.utc(2000, 1, 1),
             lastDay: DateTime.now(),
-            focusedDay: DateTime.now(),
+            focusedDay: state.transaction.date,
             currentDay: state.transaction.date,
             calendarFormat: CalendarFormat.week,
             startingDayOfWeek: StartingDayOfWeek.monday,
             headerStyle: HeaderStyle(formatButtonVisible: false),
             onDaySelected: (selectedDate, focusedDay) {
               context.read<TransactionFormCubit>().setDate(selectedDate);
-              context.read<TransactionsCubit>().fetchDetailedTransactions(state.transaction.date);
+              context.read<TransactionsCubit>().fetchDetailedTransactions(selectedDate);
             },
       )),
     );

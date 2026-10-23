@@ -19,7 +19,7 @@ class LatestEntry extends StatelessWidget {
           height: 40.h,
           width: 40.w,
           decoration: BoxDecoration(
-            color: ColorsManager.brighterGray,
+            color: ColorsManager.brightestGray,
             borderRadius: BorderRadius.circular(15.r),
           ),
           child: Icon(
@@ -32,7 +32,7 @@ class LatestEntry extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            transaction.category!.name.text.size(18.sp).bold.make(),
+            transaction.category!.name.text.size(15.sp).bold.make(),
             DateFormat("d MMM yyyy")
                 .format(transaction.date.toLocal())
                 .text
@@ -46,7 +46,7 @@ class LatestEntry extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            "${transaction.amount} EGP".text.size(16.sp).bold.make(),
+            "${transaction.amount} EGP".text.size(15.sp).bold.make(),
             (transaction.title ?? "").text
                 .size(14.sp)
                 .bold
